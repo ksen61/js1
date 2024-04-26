@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p>№1 Определить сколько раз каждый элемент встречается в массиве.</p>
+    <p id="result1"></p>
+    <p>№2 Создать массив который содержит только уникальные значения исходного массива.</p>
+    <p id="result2"></p>
+    <p>№3 Создать функцию, которая группирует студентов по возрасту.</p>
+    <p id="result3"></p>
+    <p>№4 Функция для нахождения пар чисел с заданной суммой.</p>
+    <p id="result4"></p>
+    <script>
+        // №1 Определить сколько раз каждый элемент встречается в массиве.
+        const fruits = ['apple', 'apple', 'kiwi', 'babana', 'kiwi', 'apple'];
+        let countObj = {};
+        for (let fruit of fruits) {
+            if (countObj.hasOwnProperty(fruit)) {
+                countObj[fruit]++;
+            } else {
+                countObj[fruit] = 1;
+            }
+        }
+        document.getElementById('result1').textContent = JSON.stringify(countObj, null, 2);
+        
+        // №2 Создать массив который содержит только уникальные значения исходного массива.
+        const a = ['apple', 'apple', 'kiwi', 'babana', 'kiwi', 'apple'];
+        let uniqueFruits = new Set();
+        a.forEach(fruit => uniqueFruits.add(fruit));
+        document.getElementById('result2').textContent = JSON.stringify([...uniqueFruits], null, 2);
+        
+        // №3 Создать функцию, которая группирует студентов по возрасту.
+        function groupStudentsByAge(students) {
+            const groupedByAge = {};
+
+            students.forEach(student => {
+                const { age, name } = student;
+                if (!groupedByAge[age]) {
+                groupedByAge[age] = [name];
+                } else {
+                groupedByAge[age].push(name);
+                }
+            });
+
+            return groupedByAge;
+            }
+
+            const students = [
+            { name: 'alex', age: 25 },
+            { name: 'mike', age: 24 },
+            { name: 'masha', age: 29 },
+            { name: 'will', age: 11 },
+            ];
+
+            const groupedStudents = groupStudentsByAge(students);
+            const sortedStudents = Object.entries(groupedStudents).sort((a, b) => a[0] - b[0]);
+            let result3 = '';
+            for (const [age, names] of sortedStudents) {
+                result3 += `${age}: ${names.join(', ')}<br>`;
+            }
+            document.getElementById('result3').innerHTML = result3;
+
+        // №4 Функция для нахождения пар чисел с заданной суммой
+        function findPair(arr, targetSum) {
+        let pair = [];
+        
+        for (let i = 0; i < arr.length; i++) {
+            for (let j = i + 1; j < arr.length; j++) {
+                if (arr[i] + arr[j] === targetSum) {
+                    pair.push(arr[i], arr[j]);
+                    return pair;
+                }
+            }
+        }
+        
+            return pair;
+        }
+
+        // Пример использования:
+        const uniqueNumbers = [2, 7, 11, 15];
+        const target = 9;
+        const result = findPair(uniqueNumbers, target);
+        document.getElementById('result4').textContent = JSON.stringify(result, null, 2);
+    </script>
+
+    </body>
+</html>
